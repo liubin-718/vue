@@ -27,3 +27,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+ npm i glob -S
+ npm i mini-css-extract-plugin@0.7 -D

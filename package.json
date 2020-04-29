@@ -3,13 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "webpack --config ./build/webpack.prod.conf.js --progress --mode production",
+    "watch": "webpack --config ./build/webpack.prod.conf.js --progress --mode production --watch",
+    "build:fat1": "webpack --config ./build/webpack.fat1Test.conf.js --progress --mode production",
+    "build:fat2": "webpack --config ./build/webpack.fat2Test.conf.js --progress --mode production",
+    "build:dev": "webpack --config ./build/webpack.devTest.conf.js --progress --mode production",
+    "build:ShareComponents": "webpack --config ./build/webpack.lib.conf.js",
+    "lint-staged": "lint-staged",
+    "lint": "npm run lint:js-vue",
+    "lint-staged:js-vue": "eslint --ext .js,.vue",
+    "lint:fix": "eslint --fix --cache --ext .js,.vue ./src",
+    "lint:js-vue": "eslint --cache --ext .js,.vue ./src",
+    "dev": "node ./build/dev-server",
+    "test": "jest",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "async-validator": "^1.11.2",
     "core-js": "^2.6.5",
+    "glob": "^7.1.6",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
@@ -21,7 +33,9 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "mini-css-extract-plugin": "^0.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.28.4"
   },
   "eslintConfig": {
     "root": true,
@@ -37,6 +51,11 @@
       "parser": "babel-eslint"
     }
   },
+  "keywords": [
+    "vue",
+    "webpack"
+  ],
+  "jest": {},
   "postcss": {
     "plugins": {
       "autoprefixer": {}
