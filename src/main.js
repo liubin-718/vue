@@ -1,4 +1,5 @@
 import Vue from "vue";
+import 'babel-polyfill'
 import App from "./App.vue";
 import create from "@/utils/create";
 
@@ -9,6 +10,17 @@ import router from './krouter'
 import store from './kstore'
 
 Vue.config.productionTip = false;
+Vue.config.devtools = true
+
+//////////////////////////////////////
+import ajax from 'src/api'
+Vue.use(ajax)
+//////////////////////////////////////
+
+
+
+
+
 
 Vue.prototype.$dispatch = function(eventName, data) {
   let parent = this.$parent;
