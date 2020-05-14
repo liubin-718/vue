@@ -11,7 +11,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const {
     assets,
@@ -19,11 +19,12 @@ const {
     hashLen,
     postcssLoaderOptions,
     imagesPublicPath,
-    prodDistPath,
+    mockDistPath,
     publicPath
 } = require('../config')
 
-let entrys = utils.getMultiEntry('./src/templates/prd.ejs')
+
+let entrys = utils.getMultiEntry('./src/templates/fat1-test.ejs')
 let htmlPlugins = {
     plugins: []
 }
@@ -35,9 +36,9 @@ for (let key in entrys) {
     htmlPlugins.plugins.push(new HtmlWebpackPlugin({
         template: `${srcPath}/templates/${
             entrys[key]
-        }`,
-        favicon: './src/images/favicon.ico',
+            }`,
         filename: 'index.html',
+        favicon: './src/images/favicon.ico',
         chunks: [
             'manifest',
             'vendor',
@@ -59,8 +60,9 @@ process.env.NODE_ENV = 'production'
 process.noDeprecation = true
 
 module.exports = merge(baseConfig, htmlPlugins, bundleAnalyzerPlugin, {
+    mode: 'production',
     output: {
-        path: prodDistPath,
+        path: mockDistPath,
         publicPath: publicPath,
         filename: `${assets}/js/[name].js?v=[chunkhash:${hashLen}]`
     },
@@ -186,7 +188,7 @@ module.exports = merge(baseConfig, htmlPlugins, bundleAnalyzerPlugin, {
                     priority: -20,
                     reuseExistingChunk: true
                 }
-            } 
+            }
         },
         runtimeChunk: {
             name: 'manifest'
@@ -194,30 +196,28 @@ module.exports = merge(baseConfig, htmlPlugins, bundleAnalyzerPlugin, {
     },
     plugins: [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, '../dist/dist-prod')]
-        }),
-        new CopyWebpackPlugin([
-            {
+                cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, '../dist/dist-fat1')]
+            }),
+        new CopyWebpackPlugin(
+            [{
                 from: path.resolve(__dirname, '../public/assets'),
                 to: 'assets',
                 ignore: ['.*']
-            }
-        ]),
+            }]
+        ),
         new vueLoaderPlugin(),
         // 配置环境变量  生产环境
-        new webpack.DefinePlugin({
-            'process.mock': JSON.stringify('mock'),
-            'process.env.NODE_ENV': JSON.stringify('production'),
-            'process.env.IS_TRACK': JSON.stringify('open'),
-        }),
-        new MiniCssExtractPlugin({
-            filename: `${assets}/css/[name].css?v=[contenthash:${hashLen}]`,
-            chunkFilename: `${assets}/css/[name].css?v=[contenthash:${hashLen}]`,
+        new webpack.DefinePlugin(
+            { 'process.mock': JSON.stringify('mock'), 'process.env.NODE_ENV': JSON.stringify('production') }
+        ),
+        new MiniCssExtractPlugin({ 
+            filename: `${assets}/css/[name].css?v=[contenthash:${hashLen}]`, 
+            chunkFilename: `${assets}/css/[name].css?v=[contenthash:${hashLen}]` 
         }),
         // 能使体积更小
-        new webpack.LoaderOptionsPlugin({
-            minimizer: true
-        })
+        new webpack.LoaderOptionsPlugin(
+            { minimizer: true }
+        )
     ],
     performance: {
         hints: false

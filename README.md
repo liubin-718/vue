@@ -39,6 +39,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
  html-webpack-plugin@3.0.8 http-proxy-middleware@0.19
  webpack-bundle-analyzer@3.6 mini-css-extract-plugin@0.7 uglifyjs-webpack-plugin@2.1.3 optimize-css-assets-webpack-plugin@5.0 
  copy-webpack-plugin@5.1 clean-webpack-plugin@3.0
+eslint-friendly-formatter@4.0
+connect-history-api-fallback@1.3 autoprefixer@9.4.10 opn@5.0
 
  -S:
  webpack-dev-middleware@3.7 webpack-hot-middleware@2.25

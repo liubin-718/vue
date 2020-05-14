@@ -106,7 +106,7 @@ var filecopy = function(src, dst){
                     throw err
                 }
                 // 判断是否为文件
-                if(st.isFile){
+                if(st.isFile()){
                     // 创建读取流
                     readable = fs.createReadStream(_src)
                     // 创建写入流

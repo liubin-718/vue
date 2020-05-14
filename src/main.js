@@ -12,22 +12,17 @@ import store from './kstore'
 Vue.config.productionTip = false;
 Vue.config.devtools = true
 
-//////////////////////////////////////
+// ////////////////////////////////////
 import ajax from 'src/api'
 Vue.use(ajax)
-//////////////////////////////////////
+// ////////////////////////////////////
 
 
-
-
-
-
-Vue.prototype.$dispatch = function(eventName, data) {
+Vue.prototype.$dispatch = function (eventName, data) {
   let parent = this.$parent;
   // 查找父元素
   while (parent) {
-    if (parent) {
-      // 父元素用$emit触发
+    if (parent) { // 父元素用$emit触发
       parent.$emit(eventName, data);
       // 递归查找父元素
       parent = parent.$parent;
@@ -37,15 +32,13 @@ Vue.prototype.$dispatch = function(eventName, data) {
   }
 };
 
-Vue.prototype.$boardcast = function(eventName, data) {
+Vue.prototype.$boardcast = function (eventName, data) {
   boardcast.call(this, eventName, data);
 };
 function boardcast(eventName, data) {
-  this.$children.forEach(child => {
-    // 子元素触发$emit
+  this.$children.forEach(child => { // 子元素触发$emit
     child.$emit(eventName, data);
-    if (child.$children.length) {
-      // 递归调用，通过call修改this指向 child
+    if (child.$children.length) { // 递归调用，通过call修改this指向 child
       boardcast.call(child, eventName, data);
     }
   });
@@ -54,8 +47,8 @@ function boardcast(eventName, data) {
 class Bus {
   constructor() {
     // {
-    //   eventName1:[fn1,fn2],
-    //   eventName2:[fn3,fn4],
+    // eventName1:[fn1,fn2],
+    // eventName2:[fn3,fn4],
     // }
     this.callbacks = {};
   }
@@ -64,8 +57,7 @@ class Bus {
     this.callbacks[name].push(fn);
   }
   $emit(name, args) {
-    if (this.callbacks[name]) {
-      // 存在 遍历所有callback
+    if (this.callbacks[name]) { // 存在 遍历所有callback
       this.callbacks[name].forEach(cb => cb(args));
     }
   }
