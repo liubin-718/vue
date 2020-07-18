@@ -33,7 +33,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
                 limit: limit,
-                name: `${assets}/fonts/[name].[ext]?v=[hash:${hashLen}]`
+                name: `${assets}/style/fonts/[name].[ext]?v=[hash:${hashLen}]`
             }
         },{
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -42,8 +42,22 @@ module.exports = {
                 limit: limit,
                 name: `${assets}/images/[name].[ext]?v=[hash:${hashLen}]`
             }
-        },{
-            test: /\.js$/,
+        },
+        {
+            test: /\.(js|jsx)$/,
+            //vue-virtual-scroller 重新babel转化，本插件对es6语法不完全
+            include:[srcPath,mockPath,path.join(__dirname,'../node_modules/vue-virtual-scroller')],
+            use:{
+                loader:'babel-loader',
+                options:{
+                    plugins:[
+                        require.resolve('babel-plugin-transform-vue-jsx')
+                    ]
+                }
+            }
+        },
+        {
+            test: /\.ejs$/,
             loader: 'ejs-loader',
             options: {
                 interpolate: /\{\{(.+?)\}\}/,
@@ -59,7 +73,7 @@ module.exports = {
         ENV_CONFIG: 'ENV_CONFIG'
     },
     resolve: {
-        extensions: ['.js', '.vue', '.scss', '.css', '.json'],
+        extensions: ['.js', '.vue', '.scss', '.css', '.json','.jsx'],
         alias: {
             'components': `${srcPath}/components`,
             'directives': `${srcPath}/directives`,
@@ -68,7 +82,8 @@ module.exports = {
             'modules': `${srcPath}/modules`,
             'style': `${srcPath}/style`,
             'utils': `${srcPath}/utils`,
-            'views': srcPath,
+            'views': `${srcPath}/views`,
+            'src': srcPath,
             'vue$': 'vue/dist/vue.esm.js',
             'variable$': `${srcPath}/style/variables/system-variable.scss`,
             'moment': path.resolve(process.cwd(), 'node_modules', 'moment'),

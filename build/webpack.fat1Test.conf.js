@@ -34,9 +34,7 @@ let bundleAnalyzerPlugin = {
 
 for (let key in entrys) {
     htmlPlugins.plugins.push(new HtmlWebpackPlugin({
-        template: `${srcPath}/templates/${
-            entrys[key]
-            }`,
+        template: `${srcPath}/templates/${entrys[key]}`,
         filename: 'index.html',
         favicon: './src/images/favicon.ico',
         chunks: [
@@ -79,7 +77,8 @@ module.exports = merge(baseConfig, htmlPlugins, bundleAnalyzerPlugin, {
                         }
                     },
                     'css-loader',
-                    'sass-loader', {
+                    'sass-loader',
+                     {
                         loader: 'sass-resources-loader',
                         options: {
                             resources: path.resolve(__dirname, '../src/style/base/mixin.scss')

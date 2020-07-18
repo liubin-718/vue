@@ -9,7 +9,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const baseConfig = require('./webpack.base.conf.js')
 
-const {srcPath, assets, postcssLoaderOptions, rootValue, bundleAnalyzer} = require('../config')
+const {srcPath, assets, postcssLoaderOptions, bundleAnalyzer} = require('../config')
 
 Object.keys(baseConfig.entry).forEach(function(name){
     baseConfig.entry[name] = ['webpack-hot-middleware/client'].concat(baseConfig.entry[name])

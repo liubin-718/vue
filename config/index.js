@@ -1,13 +1,13 @@
 /* eslint-disable */
 // const pxtorem = require('postcss-pxtorem')
-const rootValue = 37.5
+// const rootValue = 37.5
 let {resolve} = require('path')
 let devServer = require('./dev') // 开发环境配置 项目开发中不提交
 
 const env = process.argv[process.argv.length - 1]
 
 module.exports = {
-    assets: 'assets', // 打包后静态资源目录
+    assets: 'assets', // 打包后静态资源子目录
     hashLen: 8,
     publicPath: env === 'production' ? './' : '/',
     srcPath: resolve(__dirname, '../src'), // 项目源代码目录
@@ -20,7 +20,7 @@ module.exports = {
     limit: 1024*5, //url-loader limit参cls
     devServer: devServer,
     bundleAnalyzer: false,
-    rootValue: rootValue,
+    // rootValue: rootValue,
     imagesPublicPath: '../../',
     postcssLoaderOptions: {
         loader: 'postcss-loader',

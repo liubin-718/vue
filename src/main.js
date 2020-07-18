@@ -66,8 +66,15 @@ class Bus {
 Vue.prototype.$bus = new Bus();
 Vue.prototype.$create = create;
 
-new Vue({
+/* new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount("#app"); */
+
+new Vue({
+  el:'#app',
+  router,
+  store,
+  render: h => h(App)
+});
